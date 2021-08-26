@@ -4,10 +4,13 @@
 
 import mongoose from 'mongoose'
 
+
+
 const commentSchema = new mongoose.Schema(
     {
       name: { type: String, required: true },
       comment: { type: String, required: true },
+      dateTime: {type: String, required:true}
     },
     {
       timestamps: true,
@@ -19,11 +22,16 @@ const billSchema = new mongoose.Schema({
     customerName:{type:String, require:true},
     contact:{type:String, require:false},
     billImage:{type:String, require:false },
-    totalAmount:{type:Number, require:true },
+    totalAmount:{type:String, require:true },
     address:{type: String, require:true},
     itemDesc:{type:String, require:false},
     description:{type:String, require:true },
-    receivedAmount:{type:Number, require:true },
+    date:{type:String, require:true},
+    type:{type:String,require:false},
+    pendingAmount:{type:String,require:false},
+    due:{type:String,require:true},
+    dueDate:{type:Date,require:false},
+    receivedAmount:{type:String, require:true },
     comments:[commentSchema],
    
 },{

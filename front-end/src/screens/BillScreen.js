@@ -46,12 +46,29 @@ export default function BillScreen(props) {
           </div>
           <div className="col-3 ">
              <h3>
-                 Address Details : {bill.address}
+                 Address Details : {(bill.address ==undefined)?"Not Available":bill.address}
              </h3>
           </div>
 
           <div className="col-3 ">
-              <h3> Contact details : {bill.contact} </h3>
+              <h3> Contact details : {(bill.contact==undefined)?"Not Available":bill.contact} </h3>
+          </div>
+
+      </div>
+      <div className='row margin'>
+      <div className="col-3 ">
+             <h3>
+               Type: {bill.type}
+             </h3>
+          </div>
+          <div className="col-3 ">
+             <h3>
+             Due Date : {bill.dueDate}
+             </h3>
+          </div>
+
+          <div className="col-3 ">
+              <h3> Bill Date : {bill.date} </h3>
           </div>
 
       </div>
@@ -59,9 +76,19 @@ export default function BillScreen(props) {
       <div className='row'  >
           <div className='.col-1-balance card balance '>
              <span className=""></span>
-              Balance : {bill.totalAmount - bill.receivedAmount}
+              Balance : {Number((bill.pendingAmount).replace(",",""))}
           </div>
-        
+          <div style={{float:'right' }} >
+        <a className="whatsapp" >
+          <span className=""><i class="fa fa-whatsapp" aria-hidden="true"></i></span>
+          </a>
+          <a className="whatsapp" >
+          <span className=""><i class="fa fa-phone" aria-hidden="true"></i></span>
+          </a>
+          <a className="whatsapp" >
+          <span className=""><i class="fa fa-envelope" aria-hidden="true"></i></span>
+          </a>
+          </div>
       </div>
    <hr className="new2"></hr>
    <div>
@@ -70,7 +97,7 @@ export default function BillScreen(props) {
 
    <div className='col-2'>
        <h3><span>ITEM DETAILS</span></h3>
-       {bill.itemDesc}
+       {(bill.itemDesc == undefined)?"Details Not Available":bill.itemDesc}
     </div>
 
 
@@ -84,7 +111,7 @@ export default function BillScreen(props) {
                    Total Amount
                </th>
                <td>
-                  Rs. {bill.totalAmount} 
+                  Rs. {Number((bill.totalAmount).replace(",",""))} 
                </td>
            </tr>
            <tr>
@@ -92,7 +119,11 @@ export default function BillScreen(props) {
                    Received Amount
                </th>
                <td>
-                   Rs. {bill.receivedAmount}
+                   Rs. {
+//                    (bill.receivedAmount == undefined)?"0":parseFloat(bill.receivedAmount)
+//                   (bill.totalAmount - Number(bill.pendingAmount))
+                      (Number((bill.totalAmount).replace(",",""))) -  (Number((bill.pendingAmount).replace(",","")))
+                   }
                </td>
            </tr>
            <tr>
@@ -101,14 +132,42 @@ export default function BillScreen(props) {
                </th>
                <td>
                    <span style={{color:'red'}}>
-               Rs. {bill.totalAmount - bill.receivedAmount}</span>
+               Rs. {Number((bill.pendingAmount).replace(",",""))}</span>
                </td>
            </tr>
         
        </table>
+       
    </div>
-   
-    </div>
+   <br></br>
+  <div className='row'>
+      <h3>Comments</h3>
+  </div>
+                
+              {
+                  bill.comments.map((comment)=>(
+                      <div className='row'>
+                <button class="accordion">{comment.name} <span style={{float:'right'}}>{comment.dateTime}</span></button>
+                    <div class="panel">
+                     <p>{comment.comment}</p>
+                </div>                      
+</div>
+                  ))
+              }
+          
+
+          
+          
+
+          
+       
+
+
+
+
+
+  </div>
+    
     
         }
    
